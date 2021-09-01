@@ -76,4 +76,13 @@ public class FileController {
 		}
 	}
 
+	@GetMapping("/files/{study}/{subject}/{findParam}")
+	public ResponseEntity<List<FileResource>> getByStudyAndYearAndFindByParam(@PathVariable String study, @PathVariable String subject, @PathVariable String findParam){
+		try {
+			return new ResponseEntity<List<FileResource>>(fileService.getByStudyAndYearAndFindByParam(study, subject, findParam), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 }

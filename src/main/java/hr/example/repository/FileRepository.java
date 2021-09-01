@@ -16,4 +16,6 @@ public interface FileRepository extends JpaRepository<File, String> {
 	//List<File> findFileByStudyAndYear(String study, Integer year);
 
 	List<File> findByStudyAndSubject(String study, String subject);
+	
+	List<File> findByStudyAndSubjectAndFileNameContainingIgnoreCaseOrderByFileNameAsc(String study, String subject, String fileName);
 }

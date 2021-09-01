@@ -70,7 +70,7 @@ public class FileService {
 	}
 
 	public List<FileResource> getByStudyAndSubject(String study, String subject) {
-		List<File> fileFromDb = fileRepository.findByStudyAndSubject(study, subject);
+		List<File> fileFromDb = fileRepository.findByStudyAndSubjectOrderByFileNameAsc(study, subject);
 		log.debug("Finding files with study: {}", study);
 		List<FileResource> fileResource = new ArrayList<>();
 		fileFromDb.forEach(f -> fileResource.add(resourceAssembler.toResource(f)));
@@ -83,6 +83,14 @@ public class FileService {
 		file.setComment(comment);
 		log.debug("Saving comment to file with id: {}", fileId);
 		return resourceAssembler.toResource(fileRepository.save(file));
+	}
+	
+	public List<FileResource> getByStudyAndYearAndFindByParam(String study, String subject, String param){
+		List<File> fileFromDb = fileRepository.findByStudyAndSubjectAndFileNameContainingIgnoreCaseOrderByFileNameAsc(study, subject, param);
+		log.debug("Finding files with name like: {}", param);
+		List<FileResource> fileResource = new ArrayList<>();
+		fileFromDb.forEach(f -> fileResource.add(resourceAssembler.toResource(f)));
+		return fileResource;
 	}
 
 }
